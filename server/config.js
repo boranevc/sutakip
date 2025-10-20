@@ -13,7 +13,7 @@ const config = {
   SQLITE_PATH: process.env.SQLITE_PATH || path.join(__dirname, 'su-takip.db'),
   
   // CORS
-  CORS_ORIGIN: process.env.CORS_ORIGIN || (process.env.NODE_ENV === 'production' ? 'https://yourdomain.com' : 'http://localhost:3000'),
+  CORS_ORIGIN: process.env.CORS_ORIGIN || (process.env.NODE_ENV === 'production' ? '*' : 'http://localhost:3000'),
   
   // Security
   BCRYPT_ROUNDS: parseInt(process.env.BCRYPT_ROUNDS) || 12,
