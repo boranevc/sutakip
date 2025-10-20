@@ -252,7 +252,9 @@ app.delete('/api/water/:id', authenticateToken, async (req, res) => {
   try {
     const waterLogId = parseInt(req.params.id);
     const currentUserId = req.user.userId;
-
+    
+    console.log(`Su kaydı silme isteği - ID: ${waterLogId}, Kullanıcı ID: ${currentUserId}`);
+    
     const waterLog = await WaterLog.findOne({
       where: {
         id: waterLogId,
@@ -261,8 +263,11 @@ app.delete('/api/water/:id', authenticateToken, async (req, res) => {
     });
 
     if (!waterLog) {
+      console.log(`Su kaydı bulunamadı - ID: ${waterLogId}, Kullanıcı ID: ${currentUserId}`);
       return res.status(404).json({ message: 'Su kaydı bulunamadı' });
     }
+    
+    console.log(`Su kaydı bulundu - ID: ${waterLogId}, Miktar: ${waterLog.amount}, Kullanıcı ID: ${waterLog.userId}`);
 
     // Kullanıcının toplam su tüketiminden çıkar
     const user = await User.findByPk(req.user.userId);
@@ -276,6 +281,7 @@ app.delete('/api/water/:id', authenticateToken, async (req, res) => {
       newTotal: user.currentWaterIntake
     });
   } catch (error) {
+    console.error('Su kaydı silme hatası:', error);
     res.status(500).json({ message: 'Sunucu hatası', error: error.message });
   }
 });

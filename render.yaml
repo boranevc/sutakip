@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: su-takip-app
+    env: node
+    buildCommand: npm install && cd client && npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        value: su-takip-super-secret-jwt-key-2024-bora
+      - key: CORS_ORIGIN
+        value: "*"
+      - key: PORT
+        value: 5000
+
+databases:
+  - name: su-takip-db
+    plan: free

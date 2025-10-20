@@ -104,7 +104,14 @@ const Dashboard = () => {
       
       const response = await axios.delete(`/api/water/${logId}`);
       updateUser({ ...user, currentWaterIntake: response.data.newTotal });
-      fetchWaterHistory();
+      
+      // Su geçmişini ve kullanıcı listesini güncelle
+      await Promise.all([
+        fetchWaterHistory(),
+        fetchAllUsers()
+      ]);
+      
+      setError(''); // Başarılı silme
     } catch (error) {
       console.error('Su kaydı silme hatası:', error);
       setError(`Su kaydı silinirken hata oluştu: ${error.response?.data?.message || error.message}`);
